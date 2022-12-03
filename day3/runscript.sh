@@ -1,0 +1,1 @@
+nasm -f elf64 program.asm  && ld -o program program.o && ./program $@
