@@ -1,0 +1,113 @@
+create database aoc;
+create table `inputs` (`them` char(1), `us` char(1));
+use aoc;
+load data  infile '/input.txt' into table aoc.inputs fields terminated by ' ';
+create table workspace like inputs;
+insert into workspace select * from inputs;
+update workspace set them='X' where them='A';
+update workspace set them='Y' where them='B';
+update workspace set them='Z' where them='C';
+select SUM(3) from workspace where us=them;
+mysql> select SUM(3) from workspace where us=them;
++--------+
+| SUM(3) |
++--------+
+|   2250 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select SUM(1) from workspace where us = 'X';
++--------+
+| SUM(1) |
++--------+
+|   1349 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select SUM(2) from workspace where us = 'Y';
++--------+
+| SUM(2) |
++--------+
+|    750 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select SUM(3) from workspace where us = 'Z';
++--------+
+| SUM(3) |
++--------+
+|   2328 |
++--------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> select SUM(6) from workspace where us = 'X' and them = 'Z';
++--------+
+| SUM(6) |
++--------+
+|   6312 |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select SUM(6) from workspace where us = 'Y' and them = 'X';
++--------+
+| SUM(6) |
++--------+
+|    828 |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select SUM(6) from workspace where us = 'Z' and them = 'Y';
++--------+
+| SUM(6) |
++--------+
+|    480 |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select sum(3) from workspace where us='Y';
++--------+
+| sum(3) |
++--------+
+|   1125 |
++--------+
+1 row in set (0.01 sec)
+mysql> select sum(6) from workspace where us='Z';
++--------+
+| sum(6) |
++--------+
+|   4656 |
++--------+
+1 row in set (0.01 sec)
+
+update workspace set us=them where us='Y';
+update workspace set us='A' where them='B' and us='X';
+update workspace set us='B' where them='C' and us='X';
+update workspace set us='C' where them='A' and us='X';
+update workspace set us='A' where them='C' and us='Z';
+update workspace set us='B' where them='A' and us='Z';
+update workspace set us='C' where them='B' and us='Z';
+
+
+mysql> select SUM(1) from workspace where us='A';
++--------+
+| SUM(1) |
++--------+
+|    606 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select SUM(2) from workspace where us='B';
++--------+
+| SUM(2) |
++--------+
+|   3142 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select SUM(3) from workspace where us='C';
++--------+
+| SUM(3) |
++--------+
+|    969 |
++--------+
