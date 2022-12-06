@@ -52,12 +52,19 @@ fn main() -> io::Result<()> {
             split.next(); //to
             let dest = split.next().unwrap().parse::<i32>().unwrap();
 
-
+            let mut v: Vec<char> = Vec::new();
             for _ in 0..count {
                 match vec[ (source - 1 ) as usize].pop() {
                     None => continue,
+                    Some(c) => v.push(c)
+                }
+            }
+            loop {
+                match v.pop() {
+                    None => break,
                     Some(c) => vec[(dest - 1) as usize].push(c)
                 }
+
             }
 
             // println!("count:{}, source:{}, dest{}", count, source, dest);
