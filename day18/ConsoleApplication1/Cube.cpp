@@ -2,6 +2,10 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
+#include <memory>
+
+using namespace std;
+
 Cube::Cube(int x, int y, int z)
 {
 	this->x = x;
@@ -53,9 +57,35 @@ bool Cube::isNeighbouring(Cube other)
 		(y == other.y && z == other.z && (x == other.x - 1 || x == other.x + 1));
 }
 
+bool Cube::isSame(Cube other)
+{
+	return (this->x == other.x) &&
+		(this->y == other.y) &&
+		(this->z == other.z);
+}
+
 int Cube::getOpenSides()
 {
 	return 6 - n;
+}
+
+bool Cube::isAt(int x, int y, int z)
+{
+	return (this->x == x) && (this->y == y) && (this->z == z);
+}
+
+std::vector<shared_ptr<Cube>> Cube::getAdjacent()
+{
+	std::vector<shared_ptr<Cube>> ret;
+
+	if (x > -1)  ret.push_back(std::make_shared<Cube>(Cube(x - 1, y, z)));
+	if (x < 20) ret.push_back(std::make_shared<Cube>(Cube(x + 1, y, z)));
+	if (y > -1)  ret.push_back(std::make_shared<Cube>(Cube(x, y - 1, z)));
+	if (y < 20) ret.push_back(std::make_shared<Cube>(Cube(x, y + 1, z)));
+	if (z > -1)  ret.push_back(std::make_shared<Cube>(Cube(x, y, z - 1)));
+	if (z < 20) ret.push_back(std::make_shared<Cube>(Cube(x, y, z + 1)));
+
+	return ret;
 }
 
 void Cube::recordNeighbour()
